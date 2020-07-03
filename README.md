@@ -10,7 +10,7 @@ on Scala 2.13.3
 
 ## Taken from ["100 with ZIO Test by Adam Fraser: Scala in the City Conference"](https://www.youtube.com/watch?v=qDFfVinjDPQ)
 
-### Attention: Seems like there is a bug in the code!
+### Steps to reproduce: After one or two runs of the program it will stop working with an unspecific error.
 
 1. Run the program. 
 2. Change parameters in `def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode]`
@@ -18,4 +18,12 @@ on Scala 2.13.3
 4. Run `topContributors("python", 25)`
 5. Run `topContributors("javascript", 25)`
 
-On my machine it runs only once or maybe twice and then it stops working and fails with ExitCode 1.
+It has probably thrown an exception by now but the real error is not so obvious. (Spoiler: Github API rate-limit error)
+
+6. Add `.tapError(e => UIO(println(s"error message ${e.asInstanceOf[HttpError].body}")))` in method `getContributors`
+
+Here's the real message `{"message":"API rate limit exceeded for xxx.xxx.xx.xxx. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)","documentation_url":"https://developer.github.com/v3/#rate-limiting"}`
+
+### STTP Error Passing Info
+
+Using Throwable's `getMessage` with `HttpError` prints `null`. It would also be helpful if parsing sttp's error to string includes the actual error message which it does curently not.
