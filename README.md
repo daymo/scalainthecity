@@ -10,7 +10,9 @@ on Scala 2.13.3
 
 ## Taken from ["100 with ZIO Test by Adam Fraser: Scala in the City Conference"](https://www.youtube.com/watch?v=qDFfVinjDPQ)
 
-### Steps to reproduce: After one or two runs of the program it will stop working with an unspecific error.
+After one or two runs of the program it will stop working with an unspecific error.
+
+### Steps to reproduce 
 
 1. Run the program. 
 2. Change parameters in `def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode]`
