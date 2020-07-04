@@ -27,3 +27,5 @@ Here's the real message `{"message":"API rate limit exceeded for xxx.xxx.xx.xxx.
 ### STTP Error Passing Info
 
 Using Throwable's `getMessage` with `HttpError` prints `null`. It would also be helpful if parsing sttp's error to string includes the actual error message which it does curently not.
+
+There's a design mistake IMHO in Sttp client, their custom `ResponseError` is a subtype of `Throwable` and they aren't passing the actual error message upwards which is why ZIO stack trace isn't printing anything helpful.
